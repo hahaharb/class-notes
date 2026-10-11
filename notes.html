@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#23408F">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="수업 필기">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="icon" href="icons/icon-192.png">
+<title>수업 필기</title>
+<link rel="stylesheet" href="notes.css">
+<script src="vendor/pdf.min.js"></script>
+</head>
+<body>
+
+<!-- 1) 강의 목록 -->
+<div id="view-list">
+  <div class="list-wrap">
+    <a class="btn js-home" href="home.html" hidden style="text-decoration:none;display:inline-block;margin-bottom:8px">🏠 홈</a>
+    <h1>수업 필기</h1>
+    <p class="sub">강의를 고르거나 새로 시작하세요. 필기는 이 기기에 자동 저장돼요.</p>
+    <button class="btn primary" id="btn-new">+ 새 강의 필기</button>
+    <a class="btn" id="viewerLink" href="viewer.html" hidden style="text-decoration:none;display:inline-block;margin-left:6px">정리본 보기</a>
+    <a class="btn" id="homeLink" href="index.html" hidden style="text-decoration:none;display:inline-block;margin-left:6px">과목·강의 관리</a>
+    <div id="lecList"></div>
+    <div class="sync-line" id="syncLine"></div>
+  </div>
+</div>
+
+<!-- 2) 필기 화면 -->
+<div id="view-note" hidden>
+  <div class="bar">
+    <button class="btn" id="btn-back" title="강의 목록으로">◀ 목록</button>
+    <a class="btn js-home" href="home.html" hidden title="홈 화면으로 (필기는 자동 저장돼 있어요)" style="text-decoration:none">🏠</a>
+    <span class="title" id="title"></span>
+    <span class="clock" id="clock">00:00</span>
+    <button class="btn" id="btn-zero" title="지금을 00:00으로">시작 맞춤</button>
+    <button class="btn" id="btn-help">단축키</button>
+    <button class="btn primary" id="btn-export">내보내기</button>
+    <span class="status" id="status">준비</span>
+    <span class="status" id="syncStatus" hidden></span>
+  </div>
+
+  <div class="main">
+    <div class="slidepane">
+      <div class="stage" id="stage">
+        <div class="slidebox" id="slidebox" hidden>
+          <canvas id="canvas"></canvas>
+          <div class="hl-layer" id="hlLayer"></div>
+          <div class="text-layer" id="textLayer"></div>
+        </div>
+        <div class="empty" id="empty" hidden>
+          <h2>슬라이드 PDF가 없어요</h2>
+          <p>이 강의의 PDF를 다시 열어 주세요. 필기는 그대로 남아 있어요.</p>
+          <button class="btn primary" id="btn-reopen">PDF 열기</button>
+        </div>
+      </div>
+      <div class="thumbs" id="thumbs"></div>
+      <div class="nav">
+        <button class="btn" id="prev">◀</button>
+        <span class="num" id="num">– / –</span>
+        <button class="btn" id="next">▶</button>
+        <button class="swatch sw1" data-color="1" aria-pressed="true" title="노랑"></button>
+        <button class="swatch sw2" data-color="2" aria-pressed="false" title="초록"></button>
+        <button class="swatch sw3" data-color="3" aria-pressed="false" title="파랑"></button>
+        <button class="btn" id="btn-hl">형광펜</button>
+        <button class="btn" id="btn-rect">영역</button>
+        <button class="btn" id="btn-undo">되돌리기</button>
+      </div>
+    </div>
+
+    <div class="notepane">
+      <div class="notehead"><span id="noteLabel">필기</span><span id="noteHint">자동 저장</span></div>
+      <textarea class="note" id="note" placeholder="이 슬라이드에 대한 필기…" spellcheck="false"></textarea>
+      <div class="hllist" id="hllist" hidden></div>
+    </div>
+  </div>
+</div>
+
+<input type="file" id="file" accept="application/pdf" hidden>
+<div class="toast" id="toast"></div>
+
+<script src="notes.js"></script>
+<script src="sync.js"></script>
+</body>
+</html>
